@@ -33,7 +33,7 @@ const BackToTop = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 50 }}
           onClick={scrollToTop}
-          className="fixed bottom-10 right-10 z-[70] w-12 h-12 rounded-xl bg-gradient-neon flex items-center justify-center text-white text-xl shadow-neon-blue hover:shadow-neon-purple transition-all duration-300 group cursor-pointer"
+          className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[70] w-12 h-12 rounded-xl bg-gradient-neon flex items-center justify-center text-white text-xl shadow-neon-blue hover:shadow-neon-purple transition-all duration-300 group cursor-pointer"
         >
           <motion.div
             animate={{ y: [0, -4, 0] }}
