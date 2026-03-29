@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import { FiMenu, FiX, FiGithub, FiLinkedin, FiMail, FiDownload } from 'react-icons/fi';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -125,15 +125,26 @@ const Navbar = () => {
           })}
         </ul>
 
-        <motion.a
-          href="#contact"
-          onClick={(e) => handleNavClick(e, '#contact')}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="hidden md:block px-6 py-2 rounded-full bg-gradient-neon text-white shadow-neon-blue hover:shadow-neon-purple transition-all duration-300 text-sm font-bold cursor-pointer drop-shadow-lg"
-        >
-          Hire Me
-        </motion.a>
+        <div className="hidden md:flex items-center gap-3">
+          <motion.a
+            href="/Sarthak Kharche.pdf"
+            download
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-5 py-2 rounded-full border border-white/30 text-white bg-white/5 hover:bg-white/10 hover:border-white/60 hover:shadow-[0_0_16px_rgba(255,255,255,0.15)] transition-all duration-300 text-sm font-bold cursor-pointer flex items-center gap-2"
+          >
+            <FiDownload size={14} /> Resume
+          </motion.a>
+          <motion.a
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-2 rounded-full bg-gradient-neon text-white shadow-neon-blue hover:shadow-neon-purple transition-all duration-300 text-sm font-bold cursor-pointer drop-shadow-lg"
+          >
+            Hire Me
+          </motion.a>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -203,8 +214,15 @@ const Navbar = () => {
                 </div>
               </li>
 
-              {/* Hire Me Button */}
-              <li className="p-4">
+              {/* Resume + Hire Me Buttons */}
+              <li className="p-4 flex flex-col gap-3">
+                <a
+                  href="/Sarthak Kharche.pdf"
+                  download
+                  className="w-full py-4 rounded-xl border border-white/30 text-white bg-white/5 hover:bg-white/10 hover:border-white/60 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <FiDownload /> Download Resume
+                </a>
                 <a
                   href="#contact"
                   onClick={(e) => {
