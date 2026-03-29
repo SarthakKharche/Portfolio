@@ -68,8 +68,9 @@ const Navbar = () => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4' : 'py-6'}`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center relative z-50">
@@ -81,7 +82,7 @@ const Navbar = () => {
           SK
         </motion.a>
 
-        <ul className={`hidden md:flex items-center space-x-1 p-1 rounded-full border transition-all duration-300 ${
+        <ul className={`hidden md:flex items-center space-x-1 p-1 rounded-full border transition-all duration-300 ml-32 ${
           isScrolled ? 'bg-dark/60 backdrop-blur-xl border-white/10 shadow-2xl' : 'bg-white/[0.03] backdrop-blur-md border-white/5'
         }`}>
           {navLinks.map((link, index) => {
@@ -131,7 +132,9 @@ const Navbar = () => {
             download
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-5 py-2 rounded-full border border-white/30 text-white bg-white/5 hover:bg-white/10 hover:border-white/60 hover:shadow-[0_0_16px_rgba(255,255,255,0.15)] transition-all duration-300 text-sm font-bold cursor-pointer flex items-center gap-2"
+            className={`px-5 py-2 rounded-full border text-white transition-all duration-300 text-sm font-bold cursor-pointer flex items-center gap-2 ${
+              isScrolled ? 'bg-dark/60 backdrop-blur-xl border-white/10 hover:border-white/20' : 'bg-white/[0.03] backdrop-blur-md border-white/5 hover:border-white/10'
+            } hover:shadow-[0_0_16px_rgba(255,255,255,0.15)]`}
           >
             <FiDownload size={14} /> Resume
           </motion.a>
