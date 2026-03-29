@@ -24,7 +24,7 @@ const Skills = () => {
     {
       title: 'Design & Deployment',
       icon: <FiTerminal />,
-      skills: ['Linux', 'Web Design (Stitch UI)', 'Git & GitHub', 'Vercel', 'Render'],
+      skills: ['Web Design (Stitch UI)', 'Git & GitHub', 'Vercel', 'Render', 'Linux'],
     },
   ];
 
