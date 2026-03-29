@@ -19,6 +19,9 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
   useEffect(() => {
+    // Scroll to top on page load / refresh
+    window.scrollTo(0, 0);
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
