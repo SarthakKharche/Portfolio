@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const experiences = [
     {
-      role: 'Project Contributor',
+      role: 'Tech Lead',
       company: 'Tech For Need (DYPIU)',
       period: 'February 2026',
       points: [

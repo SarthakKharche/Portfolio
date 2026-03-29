@@ -9,7 +9,7 @@ const Skills = () => {
     {
       title: 'Full-Stack Web Development',
       icon: <FiLayout />,
-      skills: ['React based web pages', 'Building Scalable Web Apps', 'End-to-End Solutions', 'Modern Frameworks'],
+      skills: ['HTML, CSS, JavaScript', 'React based web pages', 'Building Scalable Web Apps', 'Modern Frameworks'],
     },
     {
       title: 'AI & LLM Solutions',
@@ -19,12 +19,12 @@ const Skills = () => {
     {
       title: 'Cloud & Database',
       icon: <FiDatabase />,
-      skills: ['Firebase Development', 'Firestore & Auth', 'Google OAuth', 'SQL & Python'],
+      skills: ['Firebase Development', 'Firestore & Auth', 'Google OAuth', 'SQL, Python & Java (OOPs)'],
     },
     {
-      title: 'Tools & Design',
+      title: 'Design & Deployment',
       icon: <FiTerminal />,
-      skills: ['Web Design (Stitch UI)', 'Git & GitHub', 'Java (OOPs)', 'Vercel', 'Render'],
+      skills: ['Web Design (Stitch UI)', 'Git & GitHub', 'Vercel', 'Render'],
     },
   ];
 
