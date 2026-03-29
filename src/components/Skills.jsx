@@ -19,7 +19,7 @@ const Skills = () => {
     {
       title: 'Cloud & Database',
       icon: <FiDatabase />,
-      skills: ['Firebase Development', 'Firestore & Auth', 'Google OAuth', 'SQL, Python & Java (OOPs)'],
+      skills: ['Google Cloud', 'Firebase Development', 'Firestore & Auth', 'Google OAuth', 'SQL, Python & Java (OOPs)'],
     },
     {
       title: 'Design & Deployment',
