@@ -8,7 +8,7 @@ const Contact = () => {
   const [isSending, setIsSending] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSending(true);
     setSubmitStatus(null);
@@ -16,19 +16,68 @@ const Contact = () => {
     // Use environment variables for EmailJS credentials
     const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const AUTO_REPLY_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
     const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    const AUTO_REPLY_FROM_NAME = import.meta.env.VITE_EMAILJS_AUTOREPLY_FROM_NAME || 'Sarthak Kharche';
+    const AUTO_REPLY_CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'sarthakkharche06@gmail.com';
 
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
-      .then((result) => {
-        setIsSending(false);
-        setSubmitStatus('success');
-        formRef.current.reset();
-        setTimeout(() => setSubmitStatus(null), 5000);
-      }, (error) => {
-        setIsSending(false);
-        setSubmitStatus('error');
-        setTimeout(() => setSubmitStatus(null), 5000);
-      });
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      console.error('EmailJS is not configured correctly. Check deployment environment variables.');
+      setIsSending(false);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(null), 5000);
+      return;
+    }
+
+    const formData = new FormData(formRef.current);
+    const visitorName = formData.get('name')?.toString().trim() || 'there';
+    const visitorEmail = formData.get('email')?.toString().trim();
+    const visitorMessage = formData.get('message')?.toString().trim() || '';
+
+    const primaryEmailPromise = emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
+
+    let autoReplyPromise = Promise.resolve();
+    if (AUTO_REPLY_TEMPLATE_ID && visitorEmail) {
+      autoReplyPromise = emailjs.send(
+        SERVICE_ID,
+        AUTO_REPLY_TEMPLATE_ID,
+        {
+          to_name: visitorName,
+          to_email: visitorEmail,
+          from_name: AUTO_REPLY_FROM_NAME,
+          contact_email: AUTO_REPLY_CONTACT_EMAIL,
+          subject: 'Thanks for reaching out.',
+          greeting: `Hi ${visitorName}, I received your message and I will get back to you as soon as possible.`,
+          message_summary: visitorMessage,
+          urgent_note: `If your request is urgent, you can also contact me directly at ${AUTO_REPLY_CONTACT_EMAIL}.`,
+        },
+        PUBLIC_KEY
+      );
+    } else {
+      console.warn('Auto-reply skipped: missing VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID or visitor email.');
+    }
+
+    const [primaryResult, autoReplyResult] = await Promise.allSettled([
+      primaryEmailPromise,
+      autoReplyPromise,
+    ]);
+
+    if (primaryResult.status === 'fulfilled') {
+      if (autoReplyResult.status === 'rejected') {
+        console.warn('Primary message sent, but auto-reply failed on this environment.', autoReplyResult.reason);
+      }
+
+      setIsSending(false);
+      setSubmitStatus('success');
+      formRef.current.reset();
+      setTimeout(() => setSubmitStatus(null), 5000);
+      return;
+    }
+
+    console.error('Primary EmailJS send failed.', primaryResult.reason);
+    setIsSending(false);
+    setSubmitStatus('error');
+    setTimeout(() => setSubmitStatus(null), 5000);
   };
 
   return (
@@ -120,7 +169,7 @@ const Contact = () => {
                       <>
                         <FiCheckCircle className="text-5xl text-green-400 mb-4" />
                         <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-                        <p className="text-white/60 text-sm">Thanks for reaching out. I'll get back to you soon.</p>
+                        <p className="text-white/60 text-sm">Thanks for reaching out. A confirmation email has been sent and I'll get back to you soon.</p>
                       </>
                     ) : (
                       <>
