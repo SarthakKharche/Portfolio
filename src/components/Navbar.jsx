@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiGithub, FiLinkedin, FiMail, FiDownload } from 'react-icons/fi';
 
@@ -7,6 +7,7 @@ const Navbar = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeSection, setActiveSection] = useState('about');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const ignoreObserverRef = useRef(false);
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -29,6 +30,8 @@ const Navbar = () => {
     };
 
     const observerCallback = (entries) => {
+      if (ignoreObserverRef.current) return;
+      
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
@@ -55,6 +58,9 @@ const Navbar = () => {
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     if (element) {
+      setActiveSection(targetId);
+      ignoreObserverRef.current = true;
+      
       const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -63,6 +69,10 @@ const Navbar = () => {
         top: offsetPosition,
         behavior: 'smooth'
       });
+      
+      setTimeout(() => {
+        ignoreObserverRef.current = false;
+      }, 1000);
     }
   };
 
@@ -71,7 +81,12 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'py-4' : 'py-6'}`}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 cursor-pointer ${isScrolled ? 'py-4' : 'py-6'}`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center relative z-50">
         <motion.a 
@@ -93,7 +108,7 @@ const Navbar = () => {
             return (
               <li 
                 key={link.name} 
-                className="relative px-4 py-2"
+                className="relative h-10 flex items-center"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
@@ -115,7 +130,7 @@ const Navbar = () => {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   whileHover={{ scale: 1.05 }}
-                  className={`relative z-10 text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                  className={`relative z-10 text-sm font-semibold transition-all duration-300 cursor-pointer flex items-center justify-center px-4 py-2 rounded-full ${
                     isActive || isHovered ? 'text-white' : 'text-white/60'
                   } drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]`}
                 >
