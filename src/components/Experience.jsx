@@ -4,6 +4,16 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const experiences = [
     {
+      role: 'Full-Stack Developer',
+      company: 'Dnyanavishkar Foundation, DYPIU',
+      period: '2026 - Present',
+      points: [
+        'Leading development of the Dnyanavishkar Foundation web platform at DYPIU.',
+        'Project is currently under development with ongoing full-stack feature implementation.',
+        'Designing a clean and responsive interface focused on readability and easy navigation.'
+      ],
+    },
+    {
       role: 'Tech Lead',
       company: 'Tech For Need (DYPIU)',
       period: 'February 2026',

@@ -53,6 +53,14 @@ const Projects = () => {
       github: 'https://github.com/SarthakKharche/TFN-Website',
       image: '/projects/tfn.png',
     },
+    {
+      title: 'Dnyanavishkar Foundation',
+      description: 'The official web platform for Dnyanavishkar Foundation, currently under development to showcase mission-led initiatives through a clean interface and responsive user experience.',
+      tech: ['React', 'Vite', 'Responsive UI'],
+      link: 'https://dnyanvishkar.vercel.app/',
+      github: 'https://github.com/krushnanirmalkar/dnyanvishkar',
+      image: '/projects/Screenshot 2026-03-30 113156.png',
+    },
   ];
 
   return (
